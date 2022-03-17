@@ -5,15 +5,11 @@ import (
 )
 
 func TestAdd(t *testing.T) {
-	c := NewCache(0)
+	c := NewCache(8)
 
-	c.Set("key1", ByteValue{b: []byte("111")})
-	c.Set("key2", ByteValue{b: []byte("22")})
-	c.Set("key2", ByteValue{b: []byte("33")})
-	t.Log(c.lru.Len())
+	c.Set("k1", true)
+	c.Set("k2", 1)
+	s, _ := c.Get("k1")
+	t.Log(s)
 
-	t.Log(c.lru.Get("key1"))
-	t.Log(c.lru.Get("key2"))
-	c.lru.Clear()
-	t.Log(c.lru.Len())
 }

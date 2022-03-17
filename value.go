@@ -1,15 +1,11 @@
 package main
 
 type ByteValue struct {
-	b []byte
+	b interface{}
 }
 
 func (v ByteValue) Len() int {
-	return len(v.b)
-}
-
-func (v ByteValue) String() string {
-	return string(v.b)
+	return 1
 }
 
 func cloneBytes(b []byte) []byte {
