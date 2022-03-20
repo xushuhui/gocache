@@ -1,6 +1,7 @@
 package lib
 
 import (
+	"fmt"
 	"sync"
 	"testing"
 )
@@ -68,16 +69,7 @@ func TestCurrent(t *testing.T) {
 }
 
 func TestLocal_Del(t *testing.T) {
-	cache := NewLocal()
-
-	printMemStats()
-
-	cache.Set("data", map[string]interface{}{"a": 1})
-	printMemStats()
-	cache.Set("data1", map[string]interface{}{"a": 1, "B": 2})
-	printMemStats()
-	cache.Set("data2", map[string]interface{}{"a": 11, "B": 2})
-	printMemStats()
-	cache.Set("data3", map[string]interface{}{"a": 12, "B": 2})
-	printMemStats()
+	a := [5]int{1, 2, 3, 4, 5}
+	b := a[3:4:4]
+	fmt.Println(b)
 }

@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"gocache/lru"
 	"sync"
+	"time"
 )
 
 type Cache struct {
@@ -26,7 +27,14 @@ func (c *Cache) Set(key string, value interface{}) {
 	c.mu.Lock()
 	defer c.mu.Unlock()
 
-	c.lru.Add(key, ByteValue{b: value})
+	c.lru.Add(key, lru.ByteValue{B: value}, 0)
+}
+func (c *Cache) SetEx(key string, value interface{}, expire time.Duration) {
+	c.mu.Lock()
+	defer c.mu.Unlock()
+
+	c.lru.Add(key, lru.ByteValue{B: value}, time.Now().Add(expire).Unix())
+
 }
 
 func (c *Cache) Get(key string) (value interface{}, ok bool) {
@@ -37,8 +45,8 @@ func (c *Cache) Get(key string) (value interface{}, ok bool) {
 	}
 
 	if v, ok := c.lru.Get(key); ok {
-		fmt.Println(v.(ByteValue))
-		return v.(ByteValue), ok
+
+		return v, ok
 	}
 
 	return
@@ -86,4 +94,7 @@ func (c *Cache) SetMaxMemory(size string) bool {
 	c.lru.Resize(capacity)
 
 	return true
+}
+func (c *Cache) String() {
+	fmt.Println(c.lru)
 }
